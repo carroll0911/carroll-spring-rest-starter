@@ -112,6 +112,8 @@ public class ControllerInterceptor {
                     log.warn(String.format(PREFIX_FORMAT + errMsg.toString()));
                     throw new BaseException(ERR_CODE, returnMsg.toString());
                 }
+            } else {
+                strRequest.append(StringUtil.objToJsonString(arg)).append(",");
             }
         }
 
