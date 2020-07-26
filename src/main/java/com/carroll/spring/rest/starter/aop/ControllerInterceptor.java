@@ -17,6 +17,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 /**
@@ -113,7 +114,10 @@ public class ControllerInterceptor {
                     throw new BaseException(ERR_CODE, returnMsg.toString());
                 }
             } else {
-                strRequest.append(StringUtil.objToJsonString(arg)).append(",");
+                if(!(arg instanceof HttpServletResponse)&&!(arg instanceof HttpServletRequest)){
+                    strRequest.append(StringUtil.objToJsonString(arg)).append(",");
+                }
+
             }
         }
 
