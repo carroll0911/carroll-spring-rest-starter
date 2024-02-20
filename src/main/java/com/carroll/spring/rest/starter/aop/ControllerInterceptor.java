@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -113,8 +114,11 @@ public class ControllerInterceptor {
                     log.warn(String.format(PREFIX_FORMAT + errMsg.toString()));
                     throw new BaseException(ERR_CODE, returnMsg.toString());
                 }
+            } else if (arg instanceof MultipartFile) {
+                MultipartFile mfArg = (MultipartFile) arg;
+                strRequest.append(String.format("%s;%s", mfArg.getName(), mfArg.getSize())).append(",");
             } else {
-                if(!(arg instanceof HttpServletResponse)&&!(arg instanceof HttpServletRequest)){
+                if (!(arg instanceof HttpServletResponse) && !(arg instanceof HttpServletRequest)) {
                     strRequest.append(StringUtil.objToJsonString(arg)).append(",");
                 }
 
